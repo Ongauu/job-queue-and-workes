@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: jobq
+  datasource:
+    url:
+    username:
+    password:
+    hikari:
+      maximum-pool-size: 12
+  sql:
+    init:
+      mode:
+        always
+
+jobq:
+  api:
+    algorithm: token-bucket
+    capacity: 10
+    refill-per-second: 5
+    window-seconds: 10
+  backpressure:
+    max-pending: 100
+    max-pending-per-client: 30
+    retry-after-seconds: 5
+  worker:
+      threads: 4
+      poll-interval-ms: 200
+      max-poll-interval-ms: 2000
+      lease-seconds: 30
+      outbound-bursts: 10
+  retry:
+    base-delay-ms: 100
+    max-delay-ms: 6000
+logging:
+  level:
+    com.crimson.jobq: INFO
