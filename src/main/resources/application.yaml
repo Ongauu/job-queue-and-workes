@@ -2,9 +2,9 @@ spring:
   application:
     name: jobq
   datasource:
-    url:
-    username:
-    password:
+    url: jdbc:postgresql://localhost:5432/jobq
+    username: postgres
+    password: "@Crimson1"
     hikari:
       maximum-pool-size: 12
   sql:

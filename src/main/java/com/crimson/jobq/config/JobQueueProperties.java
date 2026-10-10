@@ -11,13 +11,13 @@ public record JobQueueProperties(
     @DefaultValue Retry retry
 ) {
     public record Api(
-            @DefaultValue("token-bucket") String algorithm,
+            @DefaultValue("sliding-window") String algorithm,
             @DefaultValue("10") int capacity,
             @DefaultValue("5") double refillPerSecond,
             @DefaultValue("10") int windowSeconds){}
 
     public record Backpressure(
-            @DefaultValue("100") int maxPending,
+            @DefaultValue("30") int maxPending,
             @DefaultValue("30") int maxPendingPerClient,
             @DefaultValue("5") int retryAfterSeconds) {}
 
@@ -26,8 +26,8 @@ public record JobQueueProperties(
             @DefaultValue("200") long pollIntervalMs,
             @DefaultValue("2000") long maxPollIntervalMs,
             @DefaultValue("30") int leaseSeconds,
-            @DefaultValue("10") double outboundRatePerSecond,
-            @DefaultValue("10") int outboundBurst) {}
+            @DefaultValue("2") double outboundRatePerSecond,
+            @DefaultValue("1") int outboundBurst) {}
 
     public record Retry(
             @DefaultValue("1000") long baseDelayMs,

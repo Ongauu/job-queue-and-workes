@@ -5,11 +5,16 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.function.DoubleSupplier;
 
-@RequiredArgsConstructor
 public final class RetryBackoff {
     private final long baseMs;
     private final long maxMs;
     private final DoubleSupplier random;
+
+    public RetryBackoff(long baseMs, long maxMs, DoubleSupplier random) {
+        this.baseMs = baseMs;
+        this.maxMs = maxMs;
+        this.random = random;
+    }
 
     public long ceilingMs(int attempt){
         int shift  = Math.min(Math.max(attempt, 1) - 1, 20);

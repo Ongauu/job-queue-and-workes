@@ -1,4 +1,4 @@
-CREATE TABLE jobs(
+CREATE TABLE IF NOT EXISTS jobs(
     id BIGSERIAL PRIMARY KEY ,
     client_id TEXT NOT NULL,
     type TEXT NOT NULL,
