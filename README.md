@@ -47,14 +47,4 @@ and out of attempts (or non-retryable) goes to `DEAD`.
    (30s) the job is reclaimed. `attempts` shows it still consumed one attempt.
 7. **Two instances**: run a second copy with `--server.port=8081`. Both claim from one table without duplicates.
 
-## Honest limitations (worth thinking about)
 
-- The API limiter is **per instance** (in memory). Run 3 instances and each allows the full rate. A shared limiter
-  needs shared state - the very thing Redis is usually used for. Try building one on a Postgres table and measure
-  the cost of a DB round-trip per request.
-- Queue depth limits are **soft** under concurrency (see comment in `enqueue`).
-- Delivery is **at-least-once**: a job can run twice (lease expiry, crash after work but before `complete`).
-  Handlers should be idempotent.
-- Workers **poll**. Latency vs DB load is tuned by `poll-interval-ms` and idle backoff. `LISTEN/NOTIFY` is the next step.
-- `DONE`/`DEAD` rows are never deleted; add a retention job.
-- `X-Client-Id` is spoofable; real systems use authenticated identity.
